@@ -4,7 +4,7 @@ export class FontGrid {
     this.isLoaded = false;
   }
 
-  async load(fontPath = '/fonts/default.json') {
+  async load(fontPath = `${import.meta.env.BASE_URL}fonts/default.json`) {
     try {
       const response = await fetch(fontPath);
       this.fontData = await response.json();

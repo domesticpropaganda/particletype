@@ -26,7 +26,7 @@ class App {
 
   async init() {
     // Load font
-    await this.fontGrid.load('/fonts/default.json');
+    await this.fontGrid.load();
     this.fontRenderer = new FontRenderer(this.fontGrid);
 
     // Setup animation engine
