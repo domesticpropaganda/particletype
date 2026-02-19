@@ -54,7 +54,8 @@ class App {
     // Setup timeline (unified bottom bar with text input + controls)
     this.timeline = new Timeline(this.animationEngine, {
       onTextChange: (text) => this.updateText(text),
-      onFontEditorToggle: () => this.fontEditor.toggle()
+      onFontEditorToggle: () => this.fontEditor.toggle(),
+      recorder: this.recorder
     });
 
     // Setup controls (pass recorder)

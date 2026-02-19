@@ -19,6 +19,7 @@ export class Timeline {
     this.engine = animationEngine;
     this.onTextChange = options.onTextChange || null;
     this.onFontEditorToggle = options.onFontEditorToggle || null;
+    this.recorder = options.recorder || null;
     this.isGridVisible = false;
     this.selectedRow = null;
     this.selectedTime = null;
@@ -117,9 +118,12 @@ export class Timeline {
     spacer.style.flex = '1';
     row.appendChild(spacer);
 
-    // Export / Import
+    // Export / Import / Record
     row.appendChild(makeBtn('Export', () => this.exportAnimation()));
     row.appendChild(makeBtn('Import', () => this.importAnimation()));
+
+    this.recordBtn = makeBtn('Record WebM', () => this.recordWebM());
+    row.appendChild(this.recordBtn);
 
     // Hidden file input for import
     this.fileInput = document.createElement('input');
@@ -683,6 +687,22 @@ export class Timeline {
       requestAnimationFrame(update);
     };
     update();
+  }
+
+  // --- Record WebM ---
+
+  async recordWebM() {
+    if (!this.recorder) return;
+
+    if (this.recorder.getIsRecording()) {
+      this.recorder.stopRecording();
+      this.recordBtn.textContent = 'Record WebM';
+      return;
+    }
+
+    this.recordBtn.textContent = 'Stop Recording';
+    await this.recorder.startRecording({ format: 'webm', fps: 60 });
+    this.recordBtn.textContent = 'Record WebM';
   }
 
   // --- Export / Import ---
